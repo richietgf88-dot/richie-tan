@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exhibition — Richie Tan</title>
+<meta name="description" content="Exhibition by Richie Tan — video and photographs." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=22" />
+</head>
+<body data-screen-label="Exhibition Detail">
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Richie Tan<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="artworks.html">Artworks</a>
+    <a href="projects.html" class="active">Exhibitions</a>
+    <a href="press.html">Press</a>
+    <div class="nav-dd">
+      <button class="nav-dd-toggle" aria-haspopup="true">More</button>
+      <div class="nav-dd-menu">
+        <a href="process.html">The Process</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="partners.html">Partners &amp; Sponsors</a>
+        <a href="own-collection.html">Own Collection</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-cta">Enquire</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="drawer">
+  <a href="artworks.html"><span class="num">01</span>Artworks</a>
+  <a href="projects.html"><span class="num">02</span>Exhibitions</a>
+  <a href="process.html"><span class="num">03</span>The Process</a>
+  <a href="press.html"><span class="num">04</span>Press</a>
+  <a href="about.html"><span class="num">05</span>About</a>
+  <a href="portfolio.html"><span class="num">06</span>Portfolio</a>
+  <a href="partners.html"><span class="num">07</span>Partners</a>
+  <a href="own-collection.html"><span class="num">08</span>Collection</a>
+  <a href="contact.html"><span class="num">09</span>Contact</a>
+</div>
+
+<main id="exh-root">
+  <!-- rendered by script -->
+</main>
+
+<div class="gz" id="gz"><img alt="" /></div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div><div class="fbrand">Richie Tan</div><div class="ftag">The Unconventional Luxury Artist</div></div>
+      <div class="fcol"><h4>Explore</h4><a href="artworks.html">Artworks</a><a href="projects.html">Exhibitions</a><a href="about.html">About</a><a href="press.html">Press &amp; Media</a></div>
+      <div class="fcol"><h4>Enquiries</h4><a href="mailto:richietgf88@gmail.com">richietgf88@gmail.com</a><a href="contact.html">Commission a Work</a><a href="https://www.instagram.com/richietgf/" target="_blank" rel="noopener">Instagram @richietgf</a><a href="about.html">Based in Malaysia</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2025</span> Richie Tan. All Rights Reserved.</span><span>Pressure · Rejection · Survival · <a href="editor.html" style="color:inherit;opacity:.6;">Studio</a></span></div>
+  </div>
+</footer>
+
+<script src="site-content.js?v=22"></script>
+<script src="rt-images.js?v=22"></script>
+<script src="data.js?v=22"></script>
+<script src="site.js?v=22"></script>
+<script>
+(function () {
+  "use strict";
+  function qs(name){ return new URLSearchParams(location.search).get(name); }
+  var id = parseInt(qs("id"), 10);
+  var root = document.getElementById("exh-root");
+
+  /* ---- shared edit-mode + per-browser stores (same keys as arrange.js) ---- */
+  function editOn(){ try { return localStorage.getItem("rt_edit_mode") === "1"; } catch(e){ return false; } }
+  function LSget(k){ try { return JSON.parse(localStorage.getItem(k) || "{}"); } catch(e){ return {}; } }
+  function LSset(k,o){ try { localStorage.setItem(k, JSON.stringify(o)); return true; } catch(e){ return false; } }
+  function addedStore(){ return LSget("rt_added_v1"); }
+  function removedStore(){ return LSget("rt_removed_v1"); }
+  function orderStore(){ return LSget("rt_order_v1"); }
+
+  function mergeSub(coll, baseArr){
+    baseArr = baseArr || [];
+    var items = baseArr.slice();
+    var added = addedStore()[coll] || [];
+    for (var j=0;j<added.length;j++){ if (added[j]) items[baseArr.length + j] = added[j]; }
+    return items;
+  }
+  function displaySub(coll, items){
+    var remArr = removedStore()[coll] || [], rem = {};
+    remArr.forEach(function(i){ rem[i] = 1; });
+    var idxs = []; for (var i=0;i<items.length;i++) idxs.push(i);
+    var ord = orderStore()[coll];
+    if (ord && ord.length){
+      var seen = {}, out = [];
+      ord.forEach(function(i){ if (items[i] !== undefined && !seen[i]){ out.push(i); seen[i] = 1; } });
+      idxs.forEach(function(i){ if (!seen[i]) out.push(i); });
+      idxs = out;
+    }
+    return idxs.filter(function(i){ return items[i] !== undefined && !rem[i]; });
+  }
+  function ph(){ return (typeof RT_ph === "function") ? RT_ph() : ""; }
+  function srcOf(it, w){
+    var u = (typeof it === "string") ? it : (it && (it.u || it.img || it.logo)) || "";
+    if (!u) return ph();
+    return (u.indexOf("data:") === 0) ? u : img(u, w || 1400);
+  }
+
+  /* ---- section order (per exhibition) ---- */
+  var SKEY = "rt_exh_sections_v1";
+  var DEF_ORDER = ["story","works","video","photos","partners"];
+  function savedOrder(){ return LSget(SKEY)[id] || null; }
+  function computeOrder(avail){
+    var saved = savedOrder();
+    var order = saved ? saved.slice() : DEF_ORDER.slice();
+    avail.forEach(function(k){ if (order.indexOf(k) === -1) order.push(k); });
+    return order.filter(function(k){ return avail.indexOf(k) !== -1; });
+  }
+  function moveSection(key, dir, avail){
+    var order = computeOrder(avail);
+    var i = order.indexOf(key), j = i + dir;
+    if (i < 0 || j < 0 || j >= order.length) return;
+    var t = order[i]; order[i] = order[j]; order[j] = t;
+    var s = LSget(SKEY); s[id] = order; LSset(SKEY, s);
+    boot();
+  }
+  function secLabel(k){ return ({story:"Story",works:"Featured Works",video:"Performance Film",photos:"Photographs",partners:"Partners & Sponsors"})[k] || k; }
+
+  function boot(){
+    if (typeof PROJECTS === "undefined") { setTimeout(boot, 60); return; }
+    if (typeof RT_applyOverrides === "function") RT_applyOverrides();
+    var list = (typeof RT_mergedItems === "function") ? RT_mergedItems("projects") : PROJECTS;
+    var p = list[id];
+    if (!p) {
+      root.innerHTML = '<section class="page-head wrap"><div class="eyebrow in">Not found</div>' +
+        '<h1 class="display" style="color:var(--cream);margin-top:18px;">Exhibition</h1>' +
+        '<p class="lead" style="margin-top:20px;">This exhibition could not be found. <a href="projects.html" class="gold">Back to all exhibitions →</a></p></section>';
+      return;
+    }
+    document.title = p.t + " — Richie Tan";
+    var heroSrc = slotSrc("proj:" + id, p.u, 2000);
+    var vid = videoMarkup(p.videoFile || p.video);
+    var blocks = {};
+
+    /* story */
+    if (p.desc) {
+      blocks.story =
+        '<section class="section-pad" data-section="story" style="padding-bottom:clamp(40px,6vw,70px);"><div class="wrap" style="max-width:880px;">' +
+          '<div class="eyebrow reveal" style="margin-bottom:26px;">The Exhibition</div>' +
+          '<p class="exh-story reveal d1">' + p.desc + '</p>' +
+        '</div></section>';
+    }
+
+    /* featured works */
+    var workColl = "exhwork:" + id;
+    var workItems = mergeSub(workColl, p.works || []);
+    var workOrder = displaySub(workColl, workItems);
+    if (workOrder.length) {
+      blocks.works =
+        '<section class="section-pad" data-section="works" style="padding-top:0;padding-bottom:clamp(40px,6vw,80px);"><div class="wrap">' +
+          '<div class="eyebrow reveal" style="margin-bottom:44px;">Featured Works</div>' +
+          '<div class="exh-works" data-collname="' + workColl + '">' +
+            workOrder.map(function (ri, n) {
+              var w = workItems[ri] || {};
+              var slot = "ework:" + id + ":" + ri;
+              var def = srcOf(w.img ? { u:w.img } : w, 1200);
+              var im = (window.RTImages && RTImages.get(slot)) || def;
+              return '<article class="exh-work reveal" data-ord="' + ri + '">' +
+                '<div class="ew-img g-item" data-full="' + im + '"><img loading="lazy" data-slot="' + slot + '" src="' + im + '" alt="' + (w.t||"") + '" /></div>' +
+                '<div class="ew-body">' +
+                  '<div class="ew-num">' + (n < 9 ? "0" : "") + (n + 1) + '</div>' +
+                  '<h3 class="ew-title">' + (w.t||"Untitled") + (w.cn ? ' <span class="ew-cn">' + w.cn + '</span>' : '') + '</h3>' +
+                  (w.story ? '<p class="ew-story">“' + w.story + '”</p>' : '') +
+                '</div>' +
+              '</article>';
+            }).join("") +
+          '</div>' +
+        '</div></section>';
+    }
+
+    /* video */
+    if (vid && (vid.type === "file" || vid.type === "embed")) {
+      blocks.video =
+        '<section class="section-pad" data-section="video" style="padding-top:0;padding-bottom:clamp(40px,6vw,70px);"><div class="wrap" style="max-width:1040px;">' +
+          '<div class="eyebrow reveal" style="margin-bottom:26px;">Live Performance — Film</div>' +
+          '<div class="exh-video-wrap reveal d1"><div class="exh-video" id="exh-video">' + vid.html + '</div></div>' +
+        '</div></section>';
+    } else if (vid && vid.type === "link") {
+      blocks.video =
+        '<section class="section-pad" data-section="video" style="padding-top:0;padding-bottom:clamp(40px,6vw,70px);"><div class="wrap" style="max-width:1040px;">' +
+          '<a href="' + vid.url + '" target="_blank" rel="noopener" class="btn ghost">Watch the Performance ↗</a>' +
+        '</div></section>';
+    }
+
+    /* photos */
+    var photoColl = "exhphoto:" + id;
+    var photoItems = mergeSub(photoColl, p.gallery || p.imgs || []);
+    var photoOrder = displaySub(photoColl, photoItems);
+    if (photoOrder.length || editOn()) {
+      blocks.photos =
+        '<section class="section-pad" data-section="photos" style="padding-top:0;"><div class="wrap">' +
+          '<div class="eyebrow reveal" style="margin-bottom:30px;">Photographs</div>' +
+          '<div class="exh-gallery reveal d1" data-collname="' + photoColl + '">' +
+            photoOrder.map(function (ri, n) {
+              var src = srcOf(photoItems[ri], 1400);
+              return '<div class="g-item" data-ord="' + ri + '" data-full="' + src + '"><img loading="lazy" src="' + src + '" alt="' + p.t + ' photo ' + (n + 1) + '" /></div>';
+            }).join("") +
+          '</div>' +
+        '</div></section>';
+    }
+
+    /* partners & sponsors */
+    if (p.partners && p.partners.length) {
+      var ptHtml = "", shown = 0;
+      p.partners.forEach(function (grp, ti) {
+        var logoColl = "exhlogo:" + id + ":" + ti;
+        var logoItems = mergeSub(logoColl, grp.logos || []);
+        var logoOrder = displaySub(logoColl, logoItems);
+        if (!logoOrder.length && !editOn()) return;
+        shown++;
+        ptHtml += '<div class="exh-ptier reveal">' +
+          '<div class="ept-label">' + grp.tier + '</div>' +
+          '<div class="ept-logos" data-collname="' + logoColl + '">' +
+            logoOrder.map(function (ri) {
+              var lm = srcOf(logoItems[ri], 600);
+              return '<div class="ept-logo" data-ord="' + ri + '"><img loading="lazy" src="' + lm + '" alt="' + grp.tier + '" /></div>';
+            }).join("") +
+          '</div>' +
+        '</div>';
+      });
+      if (shown) {
+        blocks.partners =
+          '<section class="section-pad exh-partners-sec" data-section="partners" style="padding-top:0;"><div class="wrap" style="max-width:1040px;">' +
+            '<div class="eyebrow reveal" style="margin-bottom:16px;">Partners &amp; Sponsors</div>' +
+            '<p class="exh-thanks reveal">Heartfelt thanks to all our generous partners for making this event possible.</p>' +
+            ptHtml +
+          '</div></section>';
+      }
+    }
+
+    /* ---- assemble in saved section order ---- */
+    var avail = DEF_ORDER.filter(function(k){ return blocks[k]; });
+    var order = computeOrder(avail);
+
+    var html =
+      '<header class="exh-hero">' +
+        '<div class="bg"><img src="' + heroSrc + '" alt="' + p.t + '" /></div>' +
+        '<div class="scrim"></div>' +
+        '<div class="inner wrap">' +
+          '<a href="projects.html" class="exh-back">‹ All Exhibitions</a>' +
+          '<div class="eyebrow in">Exhibition &amp; Live Performance</div>' +
+          '<h1 style="margin-top:16px;">' + p.t + '</h1>' +
+          '<div class="meta"><span>' + p.yr + '</span><span>' + p.sub + '</span></div>' +
+        '</div>' +
+      '</header>';
+
+    order.forEach(function(k){ html += blocks[k]; });
+
+    /* CTA (fixed at end) */
+    html +=
+      '<section class="section-pad" style="text-align:center;background:var(--ink-2);border-top:1px solid var(--line-soft);"><div class="wrap reveal">' +
+        '<div class="eyebrow center solo" style="justify-content:center;">Host · Commission · Collect</div>' +
+        '<p class="pull" style="max-width:24ch;margin:26px auto 0;">Bring this kind of evening to <span class="em">your space.</span></p>' +
+        '<a href="contact.html?artwork=' + encodeURIComponent("Exhibition — " + p.t) + '" class="btn" style="margin-top:40px;">Enquire About This Exhibition <span class="arrow">→</span></a>' +
+      '</div></section>';
+
+    root.innerHTML = html;
+
+    /* hide video block gracefully if the file 404s */
+    var v = root.querySelector("#exh-video video");
+    if (v) v.addEventListener("error", function () { var sec = v.closest("section"); if (sec) sec.style.display = "none"; }, true);
+
+    /* gallery zoom (disabled while editing) */
+    var gz = document.getElementById("gz"), gzImg = gz.querySelector("img");
+    root.querySelectorAll(".g-item").forEach(function (it) {
+      it.addEventListener("click", function () {
+        if (editOn()) return;
+        gzImg.src = it.getAttribute("data-full"); gz.classList.add("open");
+      });
+    });
+    gz.addEventListener("click", function () { gz.classList.remove("open"); gzImg.removeAttribute("src"); });
+
+    /* section move controls (edit mode only) */
+    if (editOn()) addSectionControls(avail);
+
+    if (window.RTArrange) window.RTArrange.scan();
+    if (window.__bindDynamic) window.__bindDynamic();
+  }
+
+  function addSectionControls(avail){
+    root.querySelectorAll("[data-section]").forEach(function (sec) {
+      if (sec.querySelector(":scope > .rt-secbar")) return;
+      var key = sec.getAttribute("data-section");
+      var bar = document.createElement("div");
+      bar.className = "rt-secbar";
+      bar.innerHTML =
+        '<span class="rt-seclbl">⠿ ' + secLabel(key) + '</span>' +
+        '<button type="button" class="rt-secmv" data-dir="-1" title="Move section up">▲ Up</button>' +
+        '<button type="button" class="rt-secmv" data-dir="1" title="Move section down">▼ Down</button>';
+      sec.insertBefore(bar, sec.firstChild);
+      sec.classList.add("rt-sec-edit");
+      bar.querySelectorAll(".rt-secmv").forEach(function (b) {
+        b.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          moveSection(key, parseInt(b.getAttribute("data-dir"), 10), avail);
+        });
+      });
+    });
+  }
+
+  window.__mountGalleries = boot;
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<script src="arrange.js?v=22"></script>
+</body>
+</html>

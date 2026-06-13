@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Content Studio — Richie Tan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=22" />
+<style>
+  .ed-head{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(8,8,8,.92);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);padding:18px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .ed-head .brand{font-size:19px;}
+  .ed-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .ed-save{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity .4s;}
+  .ed-save.show{opacity:1;}
+  .ed-btn{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+    padding:11px 20px;border:1px solid var(--line);color:var(--cream);background:transparent;cursor:pointer;transition:all .4s var(--ease);border-radius:1px;text-decoration:none;display:inline-block;}
+  .ed-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .ed-btn.solid{background:var(--gold);color:#0A0A0A;border-color:var(--gold);}
+  .ed-btn.solid:hover{background:var(--cream);color:#0A0A0A;}
+  .ed-btn.danger:hover{border-color:var(--crimson);color:#d98a85;}
+  .ed-btn.sm{padding:8px 14px;font-size:10px;}
+  .ed-wrap{max-width:1100px;margin:0 auto;padding:150px var(--pad) 120px;}
+  .ed-intro{margin-bottom:40px;}
+  .ed-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;position:sticky;top:74px;z-index:40;
+    background:var(--ink);padding:14px 0;border-bottom:1px solid var(--line-soft);}
+  .ed-tab{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+    padding:11px 20px;border:1px solid var(--line);color:var(--txt-dim);background:transparent;cursor:pointer;transition:all .35s var(--ease);border-radius:1px;}
+  .ed-tab:hover{color:var(--cream);}
+  .ed-tab.active{background:var(--cream);color:#0A0A0A;border-color:var(--cream);}
+  .ed-panel{display:none;}
+  .ed-panel.active{display:block;}
+  .ed-item{display:grid;grid-template-columns:120px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line-soft);}
+  .ed-item:last-child{border-bottom:1px solid var(--line-soft);}
+  .ed-thumb{aspect-ratio:4/5;background:var(--ink-2);overflow:hidden;position:relative;}
+  .ed-thumb img{width:100%;height:100%;object-fit:cover;}
+  .ed-thumb .n{position:absolute;top:8px;left:8px;background:rgba(8,8,8,.7);color:var(--gold);font-size:10px;letter-spacing:.16em;padding:4px 8px;}
+  .ed-fields{display:flex;flex-direction:column;gap:18px;}
+  .ed-title{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--cream);}
+  .ed-title .yr{font-style:normal;font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--txt-faint);margin-left:12px;text-transform:uppercase;}
+  .ed-grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .ed-f label{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:8px;}
+  .ed-f input,.ed-f textarea{width:100%;background:var(--ink-2);border:1px solid var(--line);color:var(--cream);
+    font-family:var(--sans);font-size:15px;font-weight:300;padding:12px 14px;border-radius:1px;transition:border-color .3s;}
+  .ed-f textarea{resize:vertical;min-height:84px;line-height:1.6;font-family:var(--serif);font-size:17px;}
+  .ed-f input:focus,.ed-f textarea:focus{outline:none;border-color:var(--gold);}
+  .ed-f input::placeholder,.ed-f textarea::placeholder{color:var(--txt-faint);font-style:italic;}
+  .ed-hint{font-size:12px;color:var(--txt-faint);line-height:1.6;}
+  .ed-row-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  /* image replacer */
+  .img-replace{display:flex;gap:14px;align-items:flex-start;margin-top:6px;}
+  .img-replace .prev{width:90px;height:90px;flex:0 0 auto;background:var(--ink-2);border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .img-replace .prev img{width:100%;height:100%;object-fit:cover;}
+  .img-replace .prev .mono{font-family:var(--serif);font-size:26px;color:var(--bronze);}
+  .img-replace .ctrls{flex:1;display:flex;flex-direction:column;gap:8px;}
+  /* gallery */
+  .gal-thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .gal-t{width:74px;height:56px;position:relative;border:1px solid var(--line);overflow:hidden;background:var(--ink-2);}
+  .gal-t img{width:100%;height:100%;object-fit:cover;}
+  .gal-t .rm{position:absolute;top:2px;right:2px;width:18px;height:18px;border:0;background:rgba(8,8,8,.8);color:#fff;cursor:pointer;font-size:12px;line-height:1;border-radius:1px;}
+  .img-group-title{font-family:var(--serif);font-size:24px;color:var(--cream);margin:36px 0 6px;}
+  .img-group-title:first-child{margin-top:0;}
+  .img-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:18px 0;}
+  .modal-bg{position:fixed;inset:0;z-index:200;background:rgba(5,5,5,.9);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px;}
+  .modal-bg.show{display:flex;}
+  .modal{background:var(--ink-2);border:1px solid var(--line);max-width:680px;width:100%;padding:40px;max-height:84vh;overflow:auto;}
+  .modal h3{font-family:var(--serif);font-size:30px;color:var(--cream);margin-bottom:14px;}
+  .modal textarea{width:100%;min-height:240px;background:var(--ink);border:1px solid var(--line);color:var(--cream);
+    font-family:ui-monospace,monospace;font-size:12px;padding:16px;border-radius:1px;line-height:1.6;}
+  @media(max-width:680px){.ed-grid2,.img-grid{grid-template-columns:1fr;}.ed-item{grid-template-columns:80px 1fr;gap:16px;}}
+</style>
+</head>
+<body>
+
+<div class="ed-head">
+  <a href="index.html" class="brand">Richie Tan<span class="dot" style="color:var(--gold);">.</span> <span style="font-family:var(--sans);font-size:10px;letter-spacing:.3em;color:var(--txt-faint);vertical-align:middle;margin-left:10px;">CONTENT STUDIO</span></a>
+  <div class="ed-actions">
+    <span class="ed-save" id="saveFlag">Saved ✓</span>
+    <button class="ed-btn" id="liveEditBtn">Edit Site Live ✎</button>
+    <a href="index.html" target="_blank" class="ed-btn">Preview Site ↗</a>
+    <button class="ed-btn danger" id="clearBtn">Reset All</button>
+    <button class="ed-btn solid" id="exportBtn">Export</button>
+  </div>
+</div>
+
+<div class="ed-wrap">
+  <div class="ed-intro">
+    <div class="eyebrow" style="margin-bottom:18px;">Private · Edits Save to This Browser</div>
+    <h1 class="h-lg" style="color:var(--cream);">Content Studio</h1>
+    <p class="lead" style="margin-top:18px;max-width:62ch;">
+      Edit text, prices, exhibition videos — and <strong style="color:var(--gold);font-weight:500;">upload or replace any picture</strong> on the site. Everything saves instantly and appears live (in this browser) when you reload a page. Hit <strong style="color:var(--gold);font-weight:500;">Export</strong> to download your content so it can be baked in permanently for all visitors.
+    </p>
+  </div>
+
+  <div class="ed-tabs">
+    <button class="ed-tab active" data-tab="abstract">Artworks <span id="cnt-abstract"></span></button>
+    <button class="ed-tab" data-tab="crystal">Crystal</button>
+    <button class="ed-tab" data-tab="projects">Exhibitions</button>
+    <button class="ed-tab" data-tab="images">Images &amp; Logos</button>
+  </div>
+
+  <div class="ed-panel active" id="panel-abstract"></div>
+  <div class="ed-panel" id="panel-crystal"></div>
+  <div class="ed-panel" id="panel-projects"></div>
+  <div class="ed-panel" id="panel-images"></div>
+</div>
+
+<div class="modal-bg" id="exportModal">
+  <div class="modal">
+    <h3>Your Content</h3>
+    <p class="ed-hint" style="margin-bottom:16px;">This bundles your text edits <em>and</em> uploaded images. Click <strong style="color:var(--gold);">Download</strong> to save it, then send it back here to bake it in permanently. It's already live in this browser.</p>
+    <textarea id="exportText" readonly></textarea>
+    <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;">
+      <button class="ed-btn solid" id="downloadBtn">Download File</button>
+      <button class="ed-btn" id="copyBtn">Copy to Clipboard</button>
+      <button class="ed-btn" id="closeModal">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="site-content.js?v=22"></script>
+<script src="rt-images.js?v=22"></script>
+<script src="data.js?v=22"></script>
+<script>
+(function(){
+  "use strict";
+
+  if (typeof ABSTRACT === "undefined" || typeof COLLECTIONS === "undefined") {
+    if (!sessionStorage.getItem("rt_boot_retry")) { sessionStorage.setItem("rt_boot_retry","1"); location.reload(); return; }
+    document.querySelector(".ed-wrap").innerHTML = '<div style="padding-top:60px;color:var(--cream);"><h2 class="h-md">Content didn’t load</h2><p class="lead" style="margin-top:14px;">Please refresh once more.</p><button class="ed-btn solid" onclick="location.reload()" style="margin-top:24px;">Refresh</button></div>';
+    return;
+  }
+  sessionStorage.removeItem("rt_boot_retry");
+
+  /* ---------- text overrides store ---------- */
+  var KEY = "rt_overrides_v1";
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(e){ return {}; } }
+  var ov = load();
+  var flagT;
+  function flash(msg){ var f=document.getElementById("saveFlag"); f.textContent=msg||"Saved ✓"; f.classList.add("show"); clearTimeout(flagT); flagT=setTimeout(function(){f.classList.remove("show");},1400); }
+  function persist(){
+    try{ localStorage.setItem(KEY, JSON.stringify(ov)); flash(); return true; }
+    catch(e){ alert("Storage is full — this browser can't hold more uploaded images. Export your work, or use smaller images."); return false; }
+  }
+  function setOv(coll,idx,key,val){
+    var k=coll+":"+idx;
+    if(!ov[k]) ov[k]={};
+    if(val===""||val==null){ delete ov[k][key]; if(Object.keys(ov[k]).length===0) delete ov[k]; }
+    else ov[k][key]=val;
+    persist();
+  }
+  function get(coll,idx,key){ var k=coll+":"+idx; return (ov[k]&&ov[k][key]!=null)?ov[k][key]:""; }
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+  /* ---------- text field helpers ---------- */
+  function field(coll,idx,key,label,placeholder,textarea){
+    var val=esc(get(coll,idx,key)), ph=esc(placeholder||"");
+    var ctrl = textarea
+      ? '<textarea data-c="'+coll+'" data-i="'+idx+'" data-k="'+key+'" placeholder="'+ph+'">'+val+'</textarea>'
+      : '<input type="text" data-c="'+coll+'" data-i="'+idx+'" data-k="'+key+'" placeholder="'+ph+'" value="'+val+'" />';
+    return '<div class="ed-f"><label>'+label+'</label>'+ctrl+'</div>';
+  }
+
+  function row(coll,item,idx){
+    var thumb='<div class="ed-thumb"><span class="n">'+(idx+1)+'</span><img loading="lazy" src="'+slotSrc(slotFor(coll,idx), item.u, 400)+'" alt=""></div>';
+    var head='<div class="ed-title">'+esc(item.t)+(item.y||item.yr?'<span class="yr">'+(item.y||item.yr)+'</span>':'')+'</div>';
+    var body="";
+    if(coll==="projects"){
+      body =
+        field(coll,idx,"desc","Description / Story", item.desc||"Describe this exhibition…", true) +
+        field(coll,idx,"video","Video", "e.g. videos/art-of-smoke.mp4 — or a YouTube/Vimeo link") +
+        '<p class="ed-hint">Have a <strong style="color:var(--gold);">video file</strong> (MP4)? Type a name here like <em>videos/art-of-smoke.mp4</em> and send me the file — it plays right on the exhibition page. A YouTube or Vimeo link also works. Each exhibition has its own page with the video + the photo gallery below.</p>' +
+        galleryBlock(idx);
+    } else if(coll==="crystal"){
+      body =
+        '<div class="ed-grid2">'+field(coll,idx,"size","Dimensions", item.size||"e.g. 122 × 91 cm")+field(coll,idx,"status","Status", item.status||"e.g. Available")+'</div>'+
+        field(coll,idx,"desc","Description", item.desc||"Describe this work…", true);
+    } else {
+      body =
+        '<div class="ed-grid2">'+field(coll,idx,"size","Dimensions", item.size||"e.g. 120 × 150 cm")+field(coll,idx,"price","Price", item.price||"e.g. RM 8,888 or Price on enquiry")+'</div>'+
+        field(coll,idx,"status","Status", item.status||"Available / Sold in 2024 / Unavailable")+
+        field(coll,idx,"desc","Description / Story", item.desc||"Tell the story of this painting…", true);
+    }
+    return '<div class="ed-item">'+thumb+'<div class="ed-fields">'+head+body+'</div></div>';
+  }
+
+  /* ---------- collection → image slot prefix ---------- */
+  function slotFor(coll,idx){
+    var p = coll==="abstract"?"art":coll==="crystal"?"crystal":coll==="projects"?"proj":coll;
+    return p+":"+idx;
+  }
+
+  /* ---------- exhibition gallery ---------- */
+  function getGallery(idx){
+    var o=ov["projects:"+idx];
+    if(o && o.gallery) return o.gallery.slice();
+    return (PROJECTS[idx].imgs ? PROJECTS[idx].imgs.slice() : []);
+  }
+  function setGallery(idx,arr){
+    var k="projects:"+idx;
+    if(!ov[k]) ov[k]={};
+    if(!arr.length){ delete ov[k].gallery; if(Object.keys(ov[k]).length===0) delete ov[k]; }
+    else ov[k].gallery=arr;
+    persist();
+  }
+  function galleryBlock(idx){
+    var g=getGallery(idx);
+    var thumbs=g.map(function(u,gi){ return '<div class="gal-t"><img src="'+(u.indexOf("data:")===0?u:img(u,300))+'"><button class="rm" data-gidx="'+idx+'" data-gi="'+gi+'">×</button></div>'; }).join("");
+    return '<div class="ed-f"><label>Exhibition Photo Gallery</label>'+
+      '<div class="gal-thumbs" id="gal-'+idx+'">'+thumbs+'</div>'+
+      '<div class="ed-row-actions" style="margin-top:10px;">'+
+        '<button class="ed-btn sm" data-galadd="'+idx+'">+ Add Photos</button>'+
+        '<input type="file" accept="image/*" multiple style="display:none" data-galfile="'+idx+'">'+
+      '</div>'+
+      '<p class="ed-hint" style="margin-top:6px;">These show as a thumbnail strip inside the exhibition pop-up, alongside the main image and any video.</p>'+
+    '</div>';
+  }
+
+  /* merge user-added items (rt_added_v1) after each base array so the Studio
+     shows them too; indices line up with the live site's slot keys */
+  function rtAdded(){ try{ return JSON.parse(localStorage.getItem("rt_added_v1")||"{}"); }catch(e){ return {}; } }
+  function merged(name, base){
+    var items = base.slice(); var add = rtAdded()[name]||[];
+    for(var j=0;j<add.length;j++){ if(add[j]) items[base.length+j]=add[j]; }
+    return items;
+  }
+  var mArt = merged("abstract", ABSTRACT);
+  var mProj = merged("projects", PROJECTS);
+  var mPress = merged("press", PRESS);
+  var mPartners = merged("partners-all", PARTNERS_ALL);
+  var mPortfolioFig = merged("portfolio-figurative", PORTFOLIO_FIGURATIVE);
+  var mPortfolioAbs = merged("portfolio-abstract", PORTFOLIO_ABSTRACT);
+
+  function orderNameFor(coll){ return coll==="abstract"?"abstract":coll==="projects"?"projects":null; }
+  function build(coll,arr){
+    var on=orderNameFor(coll);
+    var order=(on && typeof RT_applyOrder==="function")?RT_applyOrder(on,arr):arr.map(function(_,i){return i;});
+    document.getElementById("panel-"+coll).innerHTML = order.map(function(ri){ return row(coll,arr[ri],ri); }).join("");
+  }
+
+  build("abstract", mArt);
+  build("crystal", COLLECTIONS.crystal);
+  build("projects", mProj);
+  document.getElementById("cnt-abstract").textContent = "· "+mArt.length;
+
+  /* ---------- IMAGES & LOGOS tab ---------- */
+  var STATIC = {
+    "home:hero":["Home — Hero background", CDN+"81f29556-3702-4b85-a93d-7dd0e0bd757d/Screenshot+2024-01-08+at+8.54.34+PM.jpg"],
+    "home:journey":["Home — “The Journey” photo", CDN+"5ae88ae4-a005-4d8a-b114-9c834017ceca/IMG_1152.jpg"],
+    "home:coll1":["Home — Abstract collection tile", CDN+"54c72d67-fb3b-4840-b533-c6676574698a/IMG_2664.JPG"],
+    "home:coll2":["Home — Crystal collection tile", CDN+"895808b1-b343-4c27-9323-7c357b3c834b/RICHIE+X+LEINA.+JPEG.jpg"],
+    "crystalpair:0":["Artworks — Richie × Leina photo", CDN+"5347cfaa-d64b-4e75-ac23-485a96b9b1d8/EDITED+2.jpg"],
+    "about:portrait":["About — Portrait", CDN+"865b07b2-68ec-4cb9-a3e5-b6cfd92c29c8/PHOTO-2024-03-13-15-44-21.jpg"],
+    "about:live":["About — Live performance", CDN+"3c6ec4e7-24f1-4acb-9f61-7fab2163ff11/IMG_9393.JPG"],
+    "about:studio":["About — In the studio", CDN+"5caca671-b8b3-4f7f-8598-bb1826e09ede/IMG_6169.jpeg"],
+    "proc:hero":["The Process — Hero (painting live)", CDN+"3c6ec4e7-24f1-4acb-9f61-7fab2163ff11/IMG_9393.JPG"],
+    "proc:studio":["The Process — In the Studio", CDN+"5caca671-b8b3-4f7f-8598-bb1826e09ede/IMG_6169.jpeg"],
+    "proc:before":["The Process — Before the Work", CDN+"5ae88ae4-a005-4d8a-b114-9c834017ceca/IMG_1152.jpg"],
+    "proc:tools":["The Process — Art of Smoke", CDN+"ba82a04d-3286-4cee-9cfc-d907b5680958/IMG_2500.jpeg"],
+    "proc:crystal":["The Process — Crystal Detail", CDN+"e0027a5c-ff2a-4e38-b6d6-6b866414c290/DSC_1905.jpg"],
+    "own:1":["Own Collection — The Journey", CDN+"81f29556-3702-4b85-a93d-7dd0e0bd757d/Screenshot+2024-01-08+at+8.54.34+PM.jpg"],
+    "own:2":["Own Collection — Where Peace Awaits", CDN+"3557a211-51d0-4be0-8ef4-ece33cb7cdf1/IMG_2664.JPG"]
+  };
+
+  function imgCard(slot,label,defUrl,isLogo){
+    var cur = RTImages.get(slot);
+    var prev = cur
+      ? '<img src="'+cur+'">'
+      : (defUrl ? '<img src="'+img(defUrl,300)+'">' : '<span class="mono">'+(label.replace(/[^A-Za-z0-9 ].*/,"").split(/\s+/).slice(0,2).map(function(w){return w.charAt(0);}).join(""))+'</span>');
+    return '<div class="ed-f"><label>'+esc(label)+(cur?' · <span style="color:var(--gold);">replaced</span>':'')+'</label>'+
+      '<div class="img-replace">'+
+        '<div class="prev">'+prev+'</div>'+
+        '<div class="ctrls">'+
+          '<div class="ed-row-actions">'+
+            '<button class="ed-btn sm" data-up="'+slot+'" data-logo="'+(isLogo?1:0)+'">Upload</button>'+
+            (cur?'<button class="ed-btn sm danger" data-reset="'+slot+'">Reset</button>':'')+
+          '</div>'+
+          '<input type="text" placeholder="…or paste an image URL" data-urlfor="'+slot+'" value="'+(cur && cur.indexOf("data:")!==0?esc(cur):"")+'">'+
+          '<input type="file" accept="image/*" style="display:none" data-file="'+slot+'" data-logo="'+(isLogo?1:0)+'">'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function buildImages(){
+    var html="";
+    html += '<p class="ed-hint" style="margin-bottom:8px;">Upload a file (auto-optimised) or paste a URL. Logos drop out on transparent PNGs. Big images use more browser storage — a few dozen is fine.</p>';
+    function grp(title, keys){
+      html += '<div class="img-group-title">'+title+'</div><div class="img-grid">';
+      keys.forEach(function(s){ if(STATIC[s]) html+=imgCard(s, STATIC[s][0], STATIC[s][1], false); });
+      html += '</div>';
+    }
+    grp('Home Page', ['home:hero','home:journey','home:coll1','home:coll2']);
+    grp('About — Photos', ['about:portrait','about:live','about:studio']);
+    grp('The Process — Photos', ['proc:hero','proc:studio','proc:before','proc:tools','proc:crystal']);
+    grp('Own Collection — Photos', ['crystalpair:0','own:1','own:2']);
+    html += '<div class="img-group-title">Artworks ('+mArt.length+')</div><div class="img-grid">';
+    mArt.forEach(function(a,i){ html+=imgCard("art:"+i, a.t, a.u, false); });
+    html += '</div>';
+    html += '<div class="img-group-title">Crystal Works</div><div class="img-grid">';
+    COLLECTIONS.crystal.forEach(function(a,i){ html+=imgCard("crystal:"+i, a.t, a.u, false); });
+    html += '</div>';
+    html += '<div class="img-group-title">Exhibitions — Main Image</div><div class="img-grid">';
+    mProj.forEach(function(a,i){ html+=imgCard("proj:"+i, a.t, a.u, false); });
+    html += '</div>';
+    PROJECTS.forEach(function(a,i){
+      if (a.works && a.works.length){
+        html += '<div class="img-group-title">'+esc(a.t)+' — Featured Works</div><div class="img-grid">';
+        a.works.forEach(function(w,j){ html+=imgCard("ework:"+i+":"+j, (w.t||"Work "+(j+1))+(w.cn?" "+w.cn:""), w.img||null, false); });
+        html += '</div>';
+      }
+    });
+    html += '<div class="img-group-title">Press Thumbnails</div><div class="img-grid">';
+    mPress.forEach(function(a,i){ html+=imgCard("press:"+i, a.outlet, a.u, false); });
+    html += '</div>';
+    html += '<div class="img-group-title">Partner &amp; Sponsor Logos ('+mPartners.length+')</div><div class="img-grid">';
+    mPartners.forEach(function(a,i){ html+=imgCard("pall:"+i, a.name, a.logo||null, true); });
+    html += '</div>';
+    html += '<div class="img-group-title">Portfolio — Figurative &amp; Realist ('+mPortfolioFig.length+')</div><div class="img-grid">';
+    mPortfolioFig.forEach(function(a,i){ html+=imgCard("pfig:"+i, a.t, a.u||null, false); });
+    html += '</div>';
+    html += '<div class="img-group-title">Portfolio — Toward Abstraction ('+mPortfolioAbs.length+')</div><div class="img-grid">';
+    mPortfolioAbs.forEach(function(a,i){ html+=imgCard("pabs:"+i, a.t, a.u||null, false); });
+    html += '</div>';
+    document.getElementById("panel-images").innerHTML = html;
+  }
+  buildImages();
+
+  /* ---------- events ---------- */
+  // text inputs (delegated)
+  document.querySelector(".ed-wrap").addEventListener("input", function(e){
+    var t=e.target;
+    if(t.dataset && t.dataset.c){ setOv(t.dataset.c, parseInt(t.dataset.i,10), t.dataset.k, t.value.trim()); }
+    else if(t.dataset && t.dataset.urlfor){ var v=t.value.trim(); if(RTImages.set(t.dataset.urlfor, v)){ flash(); refreshImg(t.dataset.urlfor); } }
+  });
+
+  // clicks (delegated): upload triggers, resets, gallery add/remove
+  document.querySelector(".ed-wrap").addEventListener("click", function(e){
+    var t=e.target;
+    if(t.dataset.up){ document.querySelector('input[data-file="'+t.dataset.up+'"]').click(); }
+    else if(t.dataset.reset){ RTImages.set(t.dataset.reset,""); flash("Reset ✓"); rebuildImages(); }
+    else if(t.dataset.galadd){ document.querySelector('input[data-galfile="'+t.dataset.galadd+'"]').click(); }
+    else if(t.classList.contains("rm") && t.dataset.gidx!=null){
+      var gi2=parseInt(t.dataset.gidx,10), pos=parseInt(t.dataset.gi,10);
+      var arr=getGallery(gi2); arr.splice(pos,1); setGallery(gi2,arr); build("projects",mProj);
+    }
+  });
+
+  // file inputs (delegated change)
+  document.querySelector(".ed-wrap").addEventListener("change", function(e){
+    var t=e.target;
+    if(t.dataset.file){
+      var f=t.files[0]; if(!f) return;
+      var isLogo = t.dataset.logo==="1";
+      RTImages.fromFile(f, isLogo?600:1600, 0.85, isLogo?"image/png":"image/jpeg").then(function(durl){
+        if(RTImages.set(t.dataset.file, durl)){ flash("Image saved ✓"); rebuildImages(); }
+        else { alert("Storage full — export your work or use a smaller image."); }
+      }).catch(function(){ alert("Couldn't read that image."); });
+    } else if(t.dataset.galfile){
+      var gi=parseInt(t.dataset.galfile,10);
+      var files=[].slice.call(t.files); if(!files.length) return;
+      var arr=getGallery(gi);
+      var chain=Promise.resolve();
+      files.forEach(function(file){ chain=chain.then(function(){ return RTImages.fromFile(file,1400,0.82,"image/jpeg").then(function(d){ arr.push(d); }); }); });
+      chain.then(function(){ setGallery(gi,arr); build("projects",mProj); flash("Photos added ✓"); });
+    }
+  });
+
+  function refreshImg(slot){ /* lightweight: rebuild images panel if visible */ if(document.getElementById("panel-images").classList.contains("active")) rebuildImages(); }
+  function rebuildImages(){ var sc=window.scrollY; buildImages(); window.scrollTo(0,sc); }
+
+  // tabs
+  document.querySelectorAll(".ed-tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".ed-tab").forEach(function(x){x.classList.remove("active");});
+      document.querySelectorAll(".ed-panel").forEach(function(x){x.classList.remove("active");});
+      tab.classList.add("active");
+      document.getElementById("panel-"+tab.dataset.tab).classList.add("active");
+      window.scrollTo(0,0);
+    });
+  });
+
+  // export / reset
+  function loadOrderRaw(){ try{ return JSON.parse(localStorage.getItem("rt_order_v1")||"{}"); }catch(e){ return {}; } }
+  function loadAddedRaw(){ try{ return JSON.parse(localStorage.getItem("rt_added_v1")||"{}"); }catch(e){ return {}; } }
+  function loadRemovedRaw(){ try{ return JSON.parse(localStorage.getItem("rt_removed_v1")||"{}"); }catch(e){ return {}; } }
+  function exportBundle(){ return { text:ov, images:RTImages.all(), order:loadOrderRaw(), added:loadAddedRaw(), removed:loadRemovedRaw() }; }
+
+  // turn ON live edit mode, then open the site so the owner can drag / add / remove
+  document.getElementById("liveEditBtn").addEventListener("click", function(){
+    try{ localStorage.setItem("rt_edit_mode","1"); }catch(e){}
+    flash("Live edit on — opening site…");
+    setTimeout(function(){ window.location.href = "index.html?edit=1"; }, 550);
+  });
+
+  var modal=document.getElementById("exportModal");
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    document.getElementById("exportText").value = JSON.stringify(exportBundle(), null, 2);
+    modal.classList.add("show");
+  });
+  document.getElementById("closeModal").addEventListener("click", function(){ modal.classList.remove("show"); });
+  modal.addEventListener("click", function(e){ if(e.target===modal) modal.classList.remove("show"); });
+  document.getElementById("copyBtn").addEventListener("click", function(){ var ta=document.getElementById("exportText"); ta.select(); try{ document.execCommand("copy"); this.textContent="Copied ✓"; }catch(e){} });
+  document.getElementById("downloadBtn").addEventListener("click", function(){
+    var blob=new Blob([JSON.stringify(exportBundle(),null,2)],{type:"application/json"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="richie-tan-content.json"; a.click();
+  });
+  document.getElementById("clearBtn").addEventListener("click", function(){
+    if(confirm("Reset ALL edits, uploaded images, custom order and added/removed items in this browser? This restores the original content.")){
+      ["rt_overrides_v1","rt_images_v1","rt_order_v1","rt_added_v1","rt_removed_v1"].forEach(function(k){ localStorage.removeItem(k); });
+      location.reload();
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Artworks — Richie Tan</title>
+<meta name="description" content="Abstract Art and Crystal Abstract Art by Richie Tan — including the Richie Tan × Leina Lei crystal crossover collection." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=22" />
+</head>
+<body data-screen-label="Artworks">
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Richie Tan<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="artworks.html" class="active">Artworks</a>
+    <a href="projects.html">Exhibitions</a>
+    <a href="press.html">Press</a>
+    <div class="nav-dd">
+      <button class="nav-dd-toggle" aria-haspopup="true">More</button>
+      <div class="nav-dd-menu">
+        <a href="process.html">The Process</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="partners.html">Partners &amp; Sponsors</a>
+        <a href="own-collection.html">Own Collection</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-cta">Enquire</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="drawer">
+  <a href="artworks.html"><span class="num">01</span>Artworks</a>
+  <a href="projects.html"><span class="num">02</span>Exhibitions</a>
+  <a href="process.html"><span class="num">03</span>The Process</a>
+  <a href="press.html"><span class="num">04</span>Press</a>
+  <a href="about.html"><span class="num">05</span>About</a>
+  <a href="portfolio.html"><span class="num">06</span>Portfolio</a>
+  <a href="partners.html"><span class="num">07</span>Partners</a>
+  <a href="own-collection.html"><span class="num">08</span>Collection</a>
+  <a href="contact.html"><span class="num">09</span>Contact</a>
+</div>
+
+<!-- PAGE HEAD -->
+<header class="page-head wrap">
+  <div class="eyebrow reveal in">The Collection</div>
+  <h1 class="display reveal in d1" style="margin-top:20px;">Artworks</h1>
+  <p class="lead reveal in d2" style="max-width:52ch;margin-top:30px;">
+    Each artwork possesses a singular narrative. Each artwork holds intrinsic value. Each artwork breathes with its own existence.
+  </p>
+  <div class="reveal in d3" style="display:flex;gap:28px;margin-top:38px;flex-wrap:wrap;">
+    <a href="#abstract" class="text-link">Abstract Art <span class="line"></span></a>
+    <a href="#crystal" class="text-link">Crystal Abstract Art <span class="line"></span></a>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- ABSTRACT COLLECTION -->
+<section class="section-pad" id="abstract">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(36px,4vw,60px);">
+      <div class="reveal">
+        <span class="kicker-num">01 —</span>
+        <h2 class="h-lg" style="margin-top:14px;color:var(--cream);">Abstract Art</h2>
+      </div>
+      <p class="muted reveal d1" style="max-width:32ch;margin-bottom:8px;">Acrylic, ink and mixed media — built through layered gesture and controlled chaos. Availability and prices noted per work.</p>
+    </div>
+
+    <div class="filter-bar reveal">
+      <div class="filter-chips" id="artFilter">
+        <button class="filter-chip active" data-filter="all">All Works</button>
+        <button class="filter-chip" data-filter="available">Available</button>
+        <button class="filter-chip" data-filter="archive">Archive</button>
+      </div>
+      <div class="filter-count" id="artCount"></div>
+    </div>
+
+    <div class="art-grid cols-3" data-render="abstract"></div>
+  </div>
+</section>
+
+<!-- INLINE QUOTE -->
+<section class="quote-band section-pad" style="padding-block:clamp(70px,9vw,130px);">
+  <div class="wrap reveal">
+    <blockquote style="font-size:clamp(24px,3.2vw,46px);max-width:26ch;">If it doesn't move you, it's not worth <span class="em">hanging.</span> If it doesn't challenge you, it's not worth <span class="em">creating.</span></blockquote>
+  </div>
+</section>
+
+<!-- CRYSTAL COLLECTION -->
+<section class="section-pad" id="crystal">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:clamp(40px,5vw,70px);">
+      <span class="kicker-num">02 —</span>
+      <h2 class="h-lg" style="margin-top:14px;color:var(--cream);">Crystal Abstract Art</h2>
+      <p class="lead" style="margin-top:24px;max-width:50ch;">Natural crystals — sourced from Vana Fine Jewellery — set into the surface so each piece answers the light of the room, never the same twice.</p>
+    </div>
+
+    <!-- Crossover feature -->
+    <div class="reveal" style="margin:clamp(30px,4vw,56px) 0 clamp(36px,4vw,60px);">
+      <div class="split" style="align-items:center;">
+        <div class="reveal-img figure" style="aspect-ratio:4/5;">
+          <img loading="lazy" data-slot="crystalpair:0" src="https://images.squarespace-cdn.com/content/v1/6597ba35b9332420ffaee1b7/5347cfaa-d64b-4e75-ac23-485a96b9b1d8/EDITED+2.jpg?format=1000w" alt="Richie Tan and Leina Lei with their crystal artwork" />
+          <span class="cap">Richie Tan × Leina Lei</span>
+        </div>
+        <div>
+          <div class="eyebrow">Crossover Collection</div>
+          <h3 class="h-md" style="margin-top:20px;color:var(--cream);">Richie Tan <span class="serif-italic gold">×</span> Leina Lei</h3>
+          <p class="lead" style="margin-top:22px;">
+            Richie and Leina stand proudly beside their signature collaborative crystal artwork — a stunning fusion of their creative talents. The piece glimmers with the interplay of their unique styles, elevated by natural crystals sourced from Vana Fine Jewellery.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Crossover works -->
+    <div data-render="crystal-crossover"></div>
+
+    <!-- Richie crystal works -->
+    <div class="divider" style="margin:clamp(20px,3vw,40px) 0 clamp(50px,7vw,90px);"></div>
+    <div class="reveal" style="margin-bottom:clamp(36px,4vw,56px);">
+      <span class="kicker-num">Crystal Works</span>
+      <h3 class="h-md" style="margin-top:14px;color:var(--cream);">By Richie Tan</h3>
+    </div>
+    <div data-render="crystal-richie"></div>
+
+    <!-- Leina crystal works -->
+    <div class="divider" style="margin:clamp(20px,3vw,40px) 0 clamp(50px,7vw,90px);"></div>
+    <div class="reveal" style="margin-bottom:clamp(36px,4vw,56px);">
+      <span class="kicker-num">Crystal Works</span>
+      <h3 class="h-md" style="margin-top:14px;color:var(--cream);">By Leina Lei</h3>
+    </div>
+    <div data-render="crystal-leina"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad" style="text-align:center;background:var(--ink-2);border-top:1px solid var(--line-soft);">
+  <div class="wrap reveal">
+    <div class="eyebrow center solo" style="justify-content:center;">Acquire</div>
+    <p class="pull" style="max-width:22ch;margin:28px auto 0;">Every available work is offered by <span class="em">private enquiry.</span></p>
+    <a href="contact.html" class="btn" style="margin-top:42px;">Enquire on a Work <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div><div class="fbrand">Richie Tan</div><div class="ftag">The Unconventional Luxury Artist</div></div>
+      <div class="fcol"><h4>Explore</h4><a href="artworks.html">Artworks</a><a href="projects.html">Exhibitions</a><a href="about.html">About</a><a href="press.html">Press &amp; Media</a></div>
+      <div class="fcol"><h4>Enquiries</h4><a href="mailto:richietgf88@gmail.com">richietgf88@gmail.com</a><a href="contact.html">Commission a Work</a><a href="https://www.instagram.com/richietgf/" target="_blank" rel="noopener">Instagram @richietgf</a><a href="about.html">Based in Malaysia</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2025</span> Richie Tan. All Rights Reserved.</span><span>Pressure · Rejection · Survival · <a href="editor.html" style="color:inherit;opacity:.6;">Studio</a></span></div>
+  </div>
+</footer>
+
+<script src="site-content.js?v=22"></script>
+<script src="rt-images.js?v=22"></script>
+<script src="site.js?v=22"></script>
+<script src="data.js?v=22"></script>
+<script src="arrange.js?v=22"></script>
+<script>
+(function(){
+  "use strict";
+  var grid = document.querySelector('[data-render=abstract]');
+  var bar = document.getElementById('artFilter');
+  var countEl = document.getElementById('artCount');
+  if(!grid || !bar) return;
+  function cards(){ return [].slice.call(grid.querySelectorAll('.art-card')); }
+  function apply(f){
+    var shown = 0;
+    cards().forEach(function(card){
+      var g = card.getAttribute('data-statusgroup') || 'other';
+      var vis = (f === 'all') || (g === f);
+      card.classList.toggle('is-hidden', !vis);
+      if(vis) shown++;
+    });
+    var label = f === 'all' ? 'works shown' : (f === 'available' ? 'available now' : 'archived works');
+    countEl.innerHTML = '<b>' + shown + '</b> ' + label;
+  }
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.filter-chip'); if(!b) return;
+    bar.querySelectorAll('.filter-chip').forEach(function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    apply(b.getAttribute('data-filter'));
+  });
+  var tries = 0;
+  (function wait(){
+    if(cards().length){ apply('all'); }
+    else if(tries++ < 40){ setTimeout(wait, 80); }
+  })();
+})();
+</script>
+</body>
+</html>

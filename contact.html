@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enquire — Richie Tan</title>
+<meta name="description" content="Enquire about an artwork or commission by Richie Tan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=22" />
+</head>
+<body data-screen-label="Contact">
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Richie Tan<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="artworks.html">Artworks</a>
+    <a href="projects.html">Exhibitions</a>
+    <a href="press.html">Press</a>
+    <div class="nav-dd">
+      <button class="nav-dd-toggle" aria-haspopup="true">More</button>
+      <div class="nav-dd-menu">
+        <a href="process.html">The Process</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="partners.html">Partners &amp; Sponsors</a>
+        <a href="own-collection.html">Own Collection</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-cta active">Enquire</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="drawer">
+  <a href="artworks.html"><span class="num">01</span>Artworks</a>
+  <a href="projects.html"><span class="num">02</span>Exhibitions</a>
+  <a href="process.html"><span class="num">03</span>The Process</a>
+  <a href="press.html"><span class="num">04</span>Press</a>
+  <a href="about.html"><span class="num">05</span>About</a>
+  <a href="portfolio.html"><span class="num">06</span>Portfolio</a>
+  <a href="partners.html"><span class="num">07</span>Partners</a>
+  <a href="own-collection.html"><span class="num">08</span>Collection</a>
+  <a href="contact.html"><span class="num">09</span>Contact</a>
+</div>
+
+<header class="page-head wrap">
+  <div class="eyebrow reveal in">Enquiries</div>
+  <h1 class="display reveal in d1" style="margin-top:20px;">Let's Talk</h1>
+  <p class="lead reveal in d2" style="max-width:46ch;margin-top:30px;">
+    To acquire a work, commission a piece or invite Richie to perform live — leave a few details and you'll hear back personally.
+  </p>
+</header>
+
+<div class="divider"></div>
+
+<section class="section-pad">
+  <div class="wrap">
+    <div class="split" style="align-items:flex-start;gap:clamp(40px,8vw,140px);">
+
+      <!-- FORM -->
+      <div class="reveal">
+        <div id="prefill-hint" style="display:none;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--gold);margin-bottom:30px;border-left:1px solid var(--gold);padding-left:18px;"></div>
+
+        <form id="enquiry-form" action="https://formsubmit.co/richietgf88@gmail.com" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New enquiry — richietan.com" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+60 12 345 6789" />
+          </div>
+          <div class="field">
+            <label for="artwork">Artwork or Commission</label>
+            <input id="artwork" name="artwork" type="text" placeholder="Title of the work, or “New Commission”" />
+          </div>
+          <div class="field">
+            <label for="intent">I'm Interested In</label>
+            <select id="intent" name="intent">
+              <option>Acquiring an existing work</option>
+              <option>Commissioning a new piece</option>
+              <option>Booking a live performance</option>
+              <option>Press &amp; media</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="3" placeholder="Tell Richie a little about what you have in mind…"></textarea>
+          </div>
+          <button type="submit" class="btn solid" style="width:100%;justify-content:center;">Send Enquiry <span class="arrow">→</span></button>
+          <p class="form-note" style="margin-top:18px;">Your details are used only to respond to your enquiry.</p>
+        </form>
+
+        <div id="form-success" class="form-success">
+          <div class="eyebrow solo" style="color:var(--gold);">Received</div>
+          <p style="font-family:var(--serif);font-size:28px;color:var(--cream);margin-top:14px;line-height:1.3;">Thank you — your enquiry is on its way.</p>
+          <p class="muted" style="margin-top:12px;">Richie reads every message personally and will be in touch shortly. For anything urgent, email <a href="mailto:richietgf88@gmail.com" class="gold">richietgf88@gmail.com</a>.</p>
+        </div>
+      </div>
+
+      <!-- ASIDE -->
+      <aside class="reveal d1">
+        <div style="border-top:1px solid var(--line);padding-top:30px;">
+          <h4 style="font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:14px;">Direct</h4>
+          <a href="mailto:richietgf88@gmail.com" class="h-md" style="font-size:clamp(22px,2.4vw,30px);color:var(--cream);display:block;">richietgf88@gmail.com</a>
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:30px;margin-top:40px;">
+          <h4 style="font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:14px;">Studio</h4>
+          <p class="muted">Kuala Lumpur, Malaysia<br />By appointment</p>
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:30px;margin-top:40px;">
+          <h4 style="font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:14px;">Follow</h4>
+          <a href="https://www.instagram.com/richietgf/" target="_blank" rel="noopener" class="text-link">Instagram @richietgf <span class="line"></span></a>
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:30px;margin-top:40px;">
+          <p class="pull" style="font-size:clamp(22px,2.4vw,30px);">If it doesn't move you, it's not worth <span class="em">hanging.</span></p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div><div class="fbrand">Richie Tan</div><div class="ftag">The Unconventional Luxury Artist</div></div>
+      <div class="fcol"><h4>Explore</h4><a href="artworks.html">Artworks</a><a href="projects.html">Exhibitions</a><a href="about.html">About</a><a href="press.html">Press &amp; Media</a></div>
+      <div class="fcol"><h4>Enquiries</h4><a href="mailto:richietgf88@gmail.com">richietgf88@gmail.com</a><a href="contact.html">Commission a Work</a><a href="https://www.instagram.com/richietgf/" target="_blank" rel="noopener">Instagram @richietgf</a><a href="about.html">Based in Malaysia</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2025</span> Richie Tan. All Rights Reserved.</span><span>Pressure · Rejection · Survival · <a href="editor.html" style="color:inherit;opacity:.6;">Studio</a></span></div>
+  </div>
+</footer>
+
+<script src="site-content.js?v=22"></script>
+<script src="rt-images.js?v=22"></script>
+<script src="site.js?v=22"></script>
+<script src="data.js?v=22"></script>
+</body>
+</html>
