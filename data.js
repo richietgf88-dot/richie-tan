@@ -81,9 +81,7 @@ var ABSTRACT = [
   { t:"Still Here", y:"2026", badge:"2026", status:"Available", price:"Price on enquiry", note:"2026 Collection", new2026:true, u:"",
     desc:"The noise inside, answered. Built to drown out every voice that said stop." },
   { t:"We Are Living In The Prison Of Our Own Creations", y:"2026", badge:"2026", status:"Available", price:"Price on enquiry", note:"2026 Collection", new2026:true, u:"",
-    desc:"Survival, rendered. The quiet defiance of simply remaining." },
-  { t:"", y:"2026", badge:"2026", status:"Available", price:"Price on enquiry", note:"2026 Collection", new2026:true, u:"",
-    desc:"The closing statement of the comeback collection — rising, deliberately, from the ash." }
+    desc:"Survival, rendered. The quiet defiance of simply remaining." }
 ];
 
 /* ---- CRYSTAL ABSTRACT ART ---- */
