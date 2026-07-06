@@ -186,6 +186,7 @@ var PROJECTS = [
 
 /* ---- PRESS ---- */
 var PRESS = [
+  { outlet:"Prestige Malaysia", quote:"Why artist Richie Tan's 'A New Vintage' was more than an exhibition.", tag:"Feature", yr:"2026", link:"https://www.prestigeonline.com/my/lifestyle/why-artist-richie-tans-a-new-vintage-was-more-than-an-exhibition/", u:"assets/press/prestige.jpg" },
   { outlet:"In Real Life", quote:"From State Basketball Player to Artist: How M'sian Richie Tan Defied a Conventional Career.", tag:"Feature", yr:"2025", link:"https://inreallife.my/from-state-basketball-player-to-farmer-to-artist-how-msian-richie-tan-defied-a-conventional-career/", u:CDN+"55172154-699c-4c9d-94ad-ad597456a0da/Screenshot+2025-05-01+at+8.17.31+AM.png" },
   { outlet:"Free Malaysia Today", quote:"Smoke and strokes — Richie Tan uses cigars to create striking artwork.", tag:"Feature · Age 24", yr:"2025", link:"https://www.freemalaysiatoday.com/category/leisure/2025/04/17/smoke-and-strokes-richie-tan-uses-cigars-to-create-striking-artwork", u:CDN+"ba82a04d-3286-4cee-9cfc-d907b5680958/IMG_2500.jpeg" },
   { outlet:"China Press 中国报", quote:"风尚 · 抽象艺术领我走出心囹圄 — featured at age 23.", tag:"Feature · Age 23", yr:"2024", link:"https://www.chinapress.com.my/20241129/%E9%A3%8E%E5%B0%9A-%E6%8A%BD%E8%B1%A1%E8%89%BA%E6%9C%AF-%E9%A2%86%E6%88%91%E8%B5%B0%E5%87%BA%E5%BF%83%E5%9B%B9%E5%9C%84/", u:CDN+"6f33ccd9-8646-4e45-8223-72986fd20ebf/Screenshot+2024-12-02+at+5.43.43+PM.jpg" },
